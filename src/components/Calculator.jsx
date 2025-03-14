@@ -1,56 +1,48 @@
 import React, { useState } from "react";
 import "./Calculator.scss";
 
+const operations = {
+  "+": (a, b) => a + b,
+  "-": (a, b) => a - b,
+  "*": (a, b) => a * b,
+  "/": (a, b) => (b === 0 ? "Error" : a / b),
+};
+
 const Calculator = () => {
-  const [result, setResult] = useState("0");
-  const [firstNumber, setFirstNumber] = useState("");
-  const [operation, setOperation] = useState("");
+  const [state, setState] = useState({
+    result: "0",
+    firstNumber: "",
+    operation: "",
+  });
 
   const handleNumber = (num) => {
-    setResult((prev) => {
-      if (num === "." && prev.includes(".")) {
-        return prev;
-      }
-      return prev === "0" ? num : prev + num;
-    });
+    setState(({ result, ...rest }) => ({
+      ...rest,
+      result: result === "0" ? num : result + num,
+    }));
   };
 
-  const handleClear = () => {
-    setResult("0");
-    setOperation("");
-    setFirstNumber("");
-  };
+  const handleClear = () =>
+    setState({ result: "0", firstNumber: "", operation: "" });
 
   const handleOperation = (op) => {
-    setFirstNumber(result);
-    setOperation(op);
-    setResult("0");
+    setState(({ result }) => ({
+      firstNumber: result,
+      operation: op,
+      result: "0",
+    }));
   };
 
   const handleEqual = () => {
-    const num1 = parseFloat(firstNumber);
-    const num2 = parseFloat(result);
-    let newResult = "0";
-
-    switch (operation) {
-      case "+":
-        newResult = String(num1 + num2);
-        break;
-      case "-":
-        newResult = String(num1 - num2);
-        break;
-      case "*":
-        newResult = String(num1 * num2);
-        break;
-      case "/":
-        newResult = num2 === 0 ? "Error" : String(num1 / num2);
-        break;
-      default:
-        return;
-    }
-    setResult(newResult);
-    setFirstNumber("");
-    setOperation("");
+    setState(({ firstNumber, result, operation }) => {
+      const num1 = parseFloat(firstNumber);
+      const num2 = parseFloat(result);
+      return {
+        result: operations[operation]?.(num1, num2)?.toString() || "0",
+        firstNumber: "",
+        operation: "",
+      };
+    });
   };
 
   const buttons = [
@@ -63,7 +55,7 @@ const Calculator = () => {
 
   return (
     <div className="calculator">
-      <p className="display">{result}</p>
+      <p className="display">{state.result}</p>
       <div className="buttons">
         {buttons.map((btn, index) => (
           <button
