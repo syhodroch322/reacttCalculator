@@ -32,79 +32,54 @@ const Calculator = () => {
     const num2 = parseFloat(result);
     let newResult = "0";
 
-    if (operation === "+") {
-      newResult = String(num1 + num2);
-    } else if (operation === "-") {
-      newResult = String(num1 - num2);
-    } else if (operation === "*") {
-      newResult = String(num1 * num2);
-    } else if (operation === "/") {
-      if (num2 === 0) {
-        newResult = "Error";
-      } else {
-        newResult = String(num1 / num2);
-      }
+    switch (operation) {
+      case "+":
+        newResult = String(num1 + num2);
+        break;
+      case "-":
+        newResult = String(num1 - num2);
+        break;
+      case "*":
+        newResult = String(num1 * num2);
+        break;
+      case "/":
+        newResult = num2 === 0 ? "Error" : String(num1 / num2);
+        break;
+      default:
+        return;
     }
     setResult(newResult);
     setFirstNumber("");
     setOperation("");
   };
 
+  const buttons = [
+    { label: "C", type: "clear", action: handleClear },
+    ...["7", "8", "9", "/"],
+    ...["4", "5", "6", "*"],
+    ...["1", "2", "3", "-"],
+    ...["0", ".", "+", "="],
+  ];
+
   return (
     <div className="calculator">
       <p className="display">{result}</p>
       <div className="buttons">
-        <button className="clear" onClick={() => handleClear()}>
-          C
-        </button>
-        <button className="number" onClick={() => handleNumber("7")}>
-          7
-        </button>
-        <button className="number" onClick={() => handleNumber("8")}>
-          8
-        </button>
-        <button className="number" onClick={() => handleNumber("9")}>
-          9
-        </button>
-        <button className="operation" onClick={() => handleOperation("/")}>
-          /
-        </button>
-        <button className="number" onClick={() => handleNumber("4")}>
-          4
-        </button>
-        <button className="number" onClick={() => handleNumber("5")}>
-          5
-        </button>
-        <button className="number" onClick={() => handleNumber("6")}>
-          6
-        </button>
-        <button className="operation" onClick={() => handleOperation("*")}>
-          *
-        </button>
-        <button className="number" onClick={() => handleNumber("1")}>
-          1
-        </button>
-        <button className="number" onClick={() => handleNumber("2")}>
-          2
-        </button>
-        <button className="number" onClick={() => handleNumber("3")}>
-          3
-        </button>
-        <button className="operation" onClick={() => handleOperation("-")}>
-          -
-        </button>
-        <button className="number" onClick={() => handleNumber("0")}>
-          0
-        </button>
-        <button className="number" onClick={() => handleNumber(".")}>
-          .
-        </button>
-        <button className="operation" onClick={() => handleOperation("+")}>
-          +
-        </button>
-        <button className="equal" onClick={() => handleEqual()}>
-          =
-        </button>
+        {buttons.map((btn, index) => (
+          <button
+            key={index}
+            className={btn.type || (isNaN(btn.label) ? "operation" : "number")}
+            onClick={() => {
+              if (btn.label === "=") handleEqual();
+              else if (btn.label === "C") handleClear();
+              else if (isNaN(btn.label) && btn.label !== ".")
+                handleOperation(btn.label);
+              else handleNumber(btn.label);
+            }}
+          >
+            {btn.label}
+          </button>
+        ))}
       </div>
     </div>
   );
