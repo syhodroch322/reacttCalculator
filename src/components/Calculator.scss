@@ -1,0 +1,79 @@
+// Переменные для цветов
+$primary-bg: #f0f0f0;
+$button-bg: #e0e0e0;
+$operation-bg: #f9a825;
+$clear-bg: #ef5350;
+$equal-bg: #66bb6a;
+$text-color: #333;
+
+.calculator {
+  width: 300px;
+  margin: 50px auto;
+  background: $primary-bg;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  padding: 20px;
+
+  .display {
+    background: #fff;
+    padding: 20px;
+    font-size: 2rem;
+    text-align: right;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    color: $text-color;
+  }
+
+  .buttons {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 5px;
+
+    button {
+      padding: 20px;
+      font-size: 1.2rem;
+      border: none;
+      border-radius: 5px;
+      background: $button-bg;
+      color: $text-color;
+      cursor: pointer;
+      transition: background 0.2s;
+
+      &:hover {
+        background: darken($button-bg, 10%);
+      }
+
+      &.number {
+        background: $button-bg;
+      }
+
+      &.operation {
+        background: $operation-bg;
+        color: #fff;
+
+        &:hover {
+          background: darken($operation-bg, 10%);
+        }
+      }
+
+      &.clear {
+        background: $clear-bg;
+        color: #fff;
+
+        &:hover {
+          background: darken($clear-bg, 10%);
+        }
+      }
+
+      &.equal {
+        background: $equal-bg;
+        color: #fff;
+        grid-column: span 2;
+
+        &:hover {
+          background: darken($equal-bg, 10%);
+        }
+      }
+    }
+  }
+}
