@@ -90,6 +90,7 @@ const ToDoList = () => {
               backgroundColor: "rgba(0, 0, 0, 0.04)",
               borderRadius: 1,
               padding: 2,
+              border: "1px solid green",
             }}
           >
             <ListItemText primary={task} />
