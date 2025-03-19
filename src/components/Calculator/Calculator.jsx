@@ -41,16 +41,11 @@ const Calculator = () => {
 
   return (
     <Boxcalc>
-      <StyledTextField
-        fullWidth
-        variant="outlined"
-        value={num}
-        readOnly="true"
-      />
+      <StyledTextField fullWidth variant="outlined" value={num} readOnly />
 
       <Grid2 container spacing={1}>
         {buttons.map((btn, index) => (
-          <Grid2 item xs={3} key={index}>
+          <Grid2 key={index}>
             <StyledButton
               variant="contained"
               color={

@@ -46,6 +46,9 @@ const Header = () => {
           <Button color="inerhit" onClick={() => navigate("/stopwatch")}>
             Stopwatch
           </Button>
+          <Button color="inherit" onClick={() => navigate("/ministore")}>
+            MiniStore
+          </Button>
           <Button color="inherit" onClick={handleOpenDialog}>
             ModalWindow
           </Button>
