@@ -6,22 +6,19 @@ import {
   CssBaseline,
   IconButton,
   ThemeProvider,
-  createTheme,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { Brightness4, Brightness7 } from "@mui/icons-material";
 import ModalWindow from "./ModalWindow";
+import { getTheme } from "./Theme";
 
 const Header = () => {
   const navigate = useNavigate();
   const [darkMode, setDarkMode] = useState(false);
   const [openDialog, setOpenDialog] = useState(false);
 
-  const theme = createTheme({
-    palette: {
-      mode: darkMode ? "dark" : "light",
-    },
-  });
+  const theme = getTheme(darkMode);
+
   const toggleDarkMode = () => {
     setDarkMode(!darkMode);
   };

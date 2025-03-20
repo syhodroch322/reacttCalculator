@@ -137,7 +137,7 @@ const MiniStore = () => {
         products={products}
         addToCart={addToCart}
       />
-      <Box sx={{ position: "absolute", top: 20, right: 20 }}>
+      <Box sx={{ position: "absolute", top: 10, right: 20 }}>
         <Button
           variant="contained"
           color="secondary"
