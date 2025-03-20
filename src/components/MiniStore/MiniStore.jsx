@@ -1,8 +1,16 @@
 import React, { useState } from "react";
-import { Box, Button, Badge } from "@mui/material";
+import {
+  Box,
+  Button,
+  Badge,
+  Select,
+  MenuItem,
+  ThemeProvider,
+} from "@mui/material";
 import ProductList from "./ProductList";
 import FilterSelect from "./FilterSelect";
 import CartDialog from "./CartDialog";
+import { getTheme } from "../Theme";
 
 const products = [
   {
@@ -74,10 +82,21 @@ const MiniStore = () => {
   const [selectedBrand, setSelectedBrand] = useState("");
   const [cart, setCart] = useState([]);
   const [openCartDialog, setOpenCartDialog] = useState(false);
+  const [sort, setSort] = useState("");
 
   const handleBrandChange = (brand) => {
     setSelectedBrand(brand);
   };
+
+  const handleSort = (event) => {
+    setSort(event.target.value);
+  };
+
+  const sortedProducts = [...products].sort((a, b) => {
+    if (sort === "up") return a.price - b.price;
+    if (sort === "down") return b.price - a.price;
+    return 0;
+  });
 
   const addToCart = (product) => {
     setCart((prevCart) => {
@@ -132,9 +151,14 @@ const MiniStore = () => {
         selectedBrand={selectedBrand}
         onBrandChange={handleBrandChange}
       />
+      <Select value={sort} onChange={handleSort} displayEmpty sx={{ m: 2 }}>
+        <MenuItem value="">Сортировка по цене</MenuItem>
+        <MenuItem value="up">По возростанию</MenuItem>
+        <MenuItem value="down">По убыванию</MenuItem>
+      </Select>
       <ProductList
         selectedBrand={selectedBrand}
-        products={products}
+        products={sortedProducts}
         addToCart={addToCart}
       />
       <Box sx={{ position: "absolute", top: 10, right: 20 }}>
