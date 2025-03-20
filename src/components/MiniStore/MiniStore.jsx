@@ -1,16 +1,8 @@
 import React, { useState } from "react";
-import {
-  Box,
-  Button,
-  Badge,
-  Select,
-  MenuItem,
-  ThemeProvider,
-} from "@mui/material";
+import { Box, Button, Badge, Select, MenuItem } from "@mui/material";
 import ProductList from "./ProductList";
 import FilterSelect from "./FilterSelect";
 import CartDialog from "./CartDialog";
-import { getTheme } from "../Theme";
 
 const products = [
   {
