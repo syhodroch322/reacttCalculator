@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Box, Button, Badge, Select, MenuItem } from "@mui/material";
+import { Box, Button, Badge, Select, MenuItem, Grid2 } from "@mui/material";
 import ProductList from "./ProductList";
 import FilterSelect from "./FilterSelect";
 import CartDialog from "./CartDialog";
@@ -138,26 +138,44 @@ const MiniStore = () => {
   );
 
   return (
-    <Box>
-      <FilterSelect
-        selectedBrand={selectedBrand}
-        onBrandChange={handleBrandChange}
-      />
-      <Select value={sort} onChange={handleSort} displayEmpty sx={{ m: 2 }}>
-        <MenuItem value="">Сортировка по цене</MenuItem>
-        <MenuItem value="up">По возростанию</MenuItem>
-        <MenuItem value="down">По убыванию</MenuItem>
-      </Select>
-      <ProductList
-        selectedBrand={selectedBrand}
-        products={sortedProducts}
-        addToCart={addToCart}
-      />
-      <Box sx={{ position: "absolute", top: 10, right: 20 }}>
+    <Box sx={{ padding: 2 }}>
+      <Box sx={{ mb: 2 }}>
+        <FilterSelect
+          selectedBrand={selectedBrand}
+          onBrandChange={handleBrandChange}
+        />
+        <Select value={sort} onChange={handleSort} displayEmpty sx={{ m: 2 }}>
+          <MenuItem value="">Сортировка по цене</MenuItem>
+          <MenuItem value="up">По возростанию</MenuItem>
+          <MenuItem value="down">По убыванию</MenuItem>
+        </Select>
+      </Box>
+
+      <Grid2 container spacing={2}>
+        <Grid2 item xs={12} sm={4} md={3}>
+          <ProductList
+            selectedBrand={selectedBrand}
+            products={sortedProducts}
+            addToCart={addToCart}
+          />
+        </Grid2>
+      </Grid2>
+      <Box
+        sx={{
+          position: "absolute",
+          top: 10,
+          right: { xs: 10, sm: 20 },
+        }}
+      >
         <Button
           variant="contained"
           color="secondary"
           onClick={toggleCartDialog}
+          sx={{
+            fontSize: { xs: "0.8rem", sm: "1rem" },
+            padding: { xs: "6px 12px", sm: "8px 16px" },
+            margin: { xs: "6px 12px", sm: "8px 16px" },
+          }}
         >
           <Badge badgeContent={totalItemsInCart} color="error">
             Cart
